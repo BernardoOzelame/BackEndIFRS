@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('api/')->group(function () {
     Route::prefix('usuarios')->group(function () {
-        Route::post('/forgotPassword', [UsuarioController::class, 'forgotPassword']);
-        Route::post('/login', [UsuarioController::class, 'login']);
-        // Route::middleware(['auth:api', 'isAdm'])->group(function () {
+         // Route::middleware(['auth:api', 'isAdm'])->group(function () {
             Route::get('/', [UsuarioController::class, 'index']);
             Route::get('/{id}', [UsuarioController::class, 'show']);
             Route::post('/', [UsuarioController::class, 'store']);
@@ -23,6 +21,9 @@ Route::prefix('api/')->group(function () {
             Route::delete('/{id}', [UsuarioController::class, 'destroy']);
             Route::post('/logout', [UsuarioController::class, 'logout'])->withoutMiddleware(['isAdm']);
         // });
+        Route::post('/forgotPassword', [UsuarioController::class, 'forgotPassword']);
+        Route::post('/login', [UsuarioController::class, 'login']);
+       
     });
     
     Route::prefix('cursos')->middleware(['auth:api', 'isAdm'])->group(function () {
