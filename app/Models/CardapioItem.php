@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model
+class CardapioItem extends Model
 {
     protected $fillable = [
-        'login',
-        'senha',
-        'tipo'
+        'cardapioId',
+        'itemId'
     ];
 }
