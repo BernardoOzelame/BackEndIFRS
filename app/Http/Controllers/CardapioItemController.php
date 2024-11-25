@@ -9,8 +9,8 @@ class CardapioItemController extends Controller
 {
     
     public function index () {
-        $cardapioItems = CardapioItem::all();
-        return $cardapioItems;
+        $cardapioItens = CardapioItem::all();
+        return $cardapioItens;
     }
     public function show ($id) {
         $cardapioItem = CardapioItem::find($id);
