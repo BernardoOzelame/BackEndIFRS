@@ -16,8 +16,17 @@ class AlunoController extends Controller
         $aluno = Aluno::find($id);
         return $aluno;
     }
-    public function store () {
-        
+    public function store (Request $aluno) {
+        $newAluno = Aluno::create($aluno->all());
+        if ($newAluno) {
+            return response()->json([
+                'message' => 'Novo aluno criado com sucesso.',
+                'aluno' => $aluno
+            ]);
+        }
+        return response()->json([
+            'message' => 'Algo inesperado aconteceu durante a inserção de aluno.'
+        ], 422);
     }
     public function update () {
         

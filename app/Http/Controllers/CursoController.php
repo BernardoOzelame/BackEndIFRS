@@ -16,8 +16,17 @@ class CursoController extends Controller
         $curso = Curso::find($id);
         return $curso;
     }
-    public function store () {
-        
+    public function store (Request $curso) {
+            $newCurso = Curso::create($curso->all());
+            if ($newCurso) {
+                return response()->json([
+                    'message' => 'Novo curso criado com sucesso.',
+                    'curso' => $curso
+                ]);
+            }
+            return response()->json([
+                'message' => 'Algo inesperado aconteceu durante a inserção do curso.'
+            ], 422);
     }
     public function update () {
         

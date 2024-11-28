@@ -16,8 +16,17 @@ class TurmaController extends Controller
         $turma = Turma::find($id);
         return $turma;
     }
-    public function store () {
-        
+    public function store (Request $turma) {
+        $newTurma = Turma::create($turma->all());
+        if ($newTurma) {
+            return response()->json([
+                'message' => 'Nova turma criada com sucesso.',
+                'turma' => $turma
+            ]);
+        }
+        return response()->json([
+            'message' => 'Algo inesperado aconteceu durante a inserção da turma.'
+        ], 422);
     }
     public function update () {
         

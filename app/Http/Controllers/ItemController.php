@@ -16,8 +16,17 @@ class ItemController extends Controller
         $item = Item::find($id);
         return $item;
     }
-    public function store () {
-        
+    public function store (Request $item) {
+        $newItem = Item::create($item->all());
+        if ($newItem) {
+            return response()->json([
+                'message' => 'Novo item criado com sucesso.',
+                'item' => $item
+            ]);
+        }
+        return response()->json([
+            'message' => 'Algo inesperado aconteceu durante a inserção do item.'
+        ], 422);
     }
     public function update () {
         
