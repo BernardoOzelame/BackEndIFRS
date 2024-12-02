@@ -17,7 +17,6 @@ Route::prefix('api/')->group(function () {
     Route::prefix('usuarios')->group(function () {
         Route::post('/forgotPassword', [UsuarioController::class, 'forgotPassword']);
         Route::post('/login', [UsuarioController::class, 'login']);
-        // Route::middleware(['auth:api', 'isAdm'])->group(function () {
         Route::get('/', [UsuarioController::class, 'index']);
         Route::get('/{id}', [UsuarioController::class, 'show']);
         Route::post('/', [UsuarioController::class, 'store']);
@@ -25,10 +24,16 @@ Route::prefix('api/')->group(function () {
         Route::delete('/{id}', [UsuarioController::class, 'destroy']);
         Route::post('/register', [JWTAuthController::class, 'register']);
         Route::post('/login', [JWTAuthController::class, 'login']);
-        // Route::post('/logout', [JWTAuthController::class, 'logout'])->withoutMiddleware(['isAdm']);
         Route::middleware([JwtMiddleware::class])->get('/logout', [JWTAuthController::class, 'logout']);
-        // });
-
+      
+        Route::get('/', [UsuarioController::class, 'index']);
+        Route::get('/{id}', [UsuarioController::class, 'show']);
+        Route::post('/', [UsuarioController::class, 'store']);
+        Route::put('/{id}', [UsuarioController::class, 'update']);
+        Route::delete('/{id}', [UsuarioController::class, 'destroy']);
+        Route::post('/logout', [UsuarioController::class, 'logout'])->withoutMiddleware(['isAdm']);
+        Route::post('/forgotPassword', [UsuarioController::class, 'forgotPassword']);
+        Route::post('/login', [UsuarioController::class, 'login']);
     });
 
     Route::prefix('cursos')->middleware(['auth:api', 'isAdm'])->group(function () {

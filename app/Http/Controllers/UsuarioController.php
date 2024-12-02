@@ -12,8 +12,9 @@ class UsuarioController extends Controller
         $usuarios = Usuario::all();
         return $usuarios;
     }
-    public function show () {
-        
+    public function show ($id) {
+        $usuario = Usuario::find($id);
+        return $usuario;
     }
     public function store (Request $usuario) {
             $newUsuario = Usuario::create($usuario->all());

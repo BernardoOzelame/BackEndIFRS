@@ -9,8 +9,8 @@ class ItemController extends Controller
 {
     
     public function index () {
-        $items = Item::all();
-        return $items;
+        $itens = Item::all();
+        return $itens;
     }
     public function show ($id) {
         $item = Item::find($id);
