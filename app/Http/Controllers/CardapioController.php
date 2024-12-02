@@ -16,8 +16,17 @@ class CardapioController extends Controller
         $cardapio = Cardapio::find($id);
         return $cardapio;
     }
-    public function store () {
-        
+    public function store (Request $cardapio) {
+        $newCardapio = Cardapio::create($cardapio->all());
+        if ($newCardapio) {
+            return response()->json([
+                'message' => 'Novo cardapio criado com sucesso.',
+                'cardapio' => $cardapio
+            ]);
+        }
+        return response()->json([
+            'message' => 'Algo inesperado aconteceu durante a inserção do cardapio.'
+        ], 422);
     }
     public function update () {
         

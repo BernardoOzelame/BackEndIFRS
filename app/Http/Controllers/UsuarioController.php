@@ -16,8 +16,17 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
         return $usuario;
     }
-    public function store () {
-        
+    public function store (Request $usuario) {
+            $newUsuario = Usuario::create($usuario->all());
+            if ($newUsuario) {
+                return response()->json([
+                    'message' => 'Novo Usuario criado com sucesso.',
+                    'usuario' => $usuario
+                ]);
+            }
+            return response()->json([
+                'message' => 'Algo inesperado aconteceu durante a inserção do usuario.'
+            ], 422);
     }
     public function update () {
         
