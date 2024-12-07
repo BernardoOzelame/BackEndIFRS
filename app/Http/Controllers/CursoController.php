@@ -28,10 +28,40 @@ class CursoController extends Controller
                 'message' => 'Algo inesperado aconteceu durante a inserção do curso.'
             ], 422);
     }
-    public function update () {
-        
+    public function update(Request $request, $id)
+    {
+        $curso = Curso::find($id);
+        if (!$curso) {
+            return response()->json(['message' => 'Curso não encontrado.'], 404);
+        }
+
+        $updated = $curso->update($request->all());
+        if ($updated) {
+            return response()->json([
+                'message' => 'Curso atualizado com sucesso.',
+                'curso' => $curso
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar atualizar o curso.'
+        ], 422);
     }
-    public function destroy () {
-        
+
+    public function destroy($id)
+    {
+        $curso = Curso::find($id);
+      
+        if (!$curso) {
+            return response()->json(['message' => 'Curso não encontrado.'], 404);
+        }
+
+        if ($curso->delete()) {
+            return response()->json(['message' => 'Curso deletado com sucesso.']);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar deletar o curso.'
+        ], 422);
     }
 }

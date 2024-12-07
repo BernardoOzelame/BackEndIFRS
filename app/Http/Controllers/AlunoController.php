@@ -28,10 +28,39 @@ class AlunoController extends Controller
             'message' => 'Algo inesperado aconteceu durante a inserção de aluno.'
         ], 422);
     }
-    public function update () {
-        
+    public function update(Request $request, $id)
+    {
+        $aluno = Aluno::find($id);
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado.'], 404);
+        }
+
+        $updated = $aluno->update($request->all());
+        if ($updated) {
+            return response()->json([
+                'message' => 'Aluno atualizado com sucesso.',
+                'aluno' => $aluno
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar atualizar o aluno.'
+        ], 422);
     }
-    public function destroy () {
-        
+
+    public function destroy($id)
+    {
+        $aluno = Aluno::find($id);
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado.'], 404);
+        }
+
+        if ($aluno->delete()) {
+            return response()->json(['message' => 'Aluno deletado com sucesso.']);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar deletar o aluno.'
+        ], 422);
     }
 }

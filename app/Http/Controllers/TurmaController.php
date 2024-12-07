@@ -28,10 +28,39 @@ class TurmaController extends Controller
             'message' => 'Algo inesperado aconteceu durante a inserção da turma.'
         ], 422);
     }
-    public function update () {
-        
+    public function update(Request $request, $id)
+    {
+        $turma = Turma::find($id);
+        if (!$turma) {
+            return response()->json(['message' => 'Turma não encontrada.'], 404);
+        }
+
+        $updated = $turma->update($request->all());
+        if ($updated) {
+            return response()->json([
+                'message' => 'Turma atualizada com sucesso.',
+                'turma' => $turma
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar atualizar a turma.'
+        ], 422);
     }
-    public function destroy () {
-        
+
+    public function destroy($id)
+    {
+        $turma = Turma::find($id);
+        if (!$turma) {
+            return response()->json(['message' => 'Turma não encontrada.'], 404);
+        }
+
+        if ($turma->delete()) {
+            return response()->json(['message' => 'Turma deletada com sucesso.']);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar deletar a turma.'
+        ], 422);
     }
 }

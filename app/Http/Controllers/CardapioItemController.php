@@ -19,7 +19,7 @@ class CardapioItemController extends Controller
          $newCardapioItem = CardapioItem::create($cardapioItem->all());
          if ($newCardapioItem) {
              return response()->json([
-                 'message' => 'Novo cardapioItem criada com sucesso.',
+                 'message' => 'Nova relação de cardápio e item criada com sucesso.',
                  'cardapioItem' => $cardapioItem
              ]);
          }
@@ -27,10 +27,39 @@ class CardapioItemController extends Controller
              'message' => 'Algo inesperado aconteceu durante a inserção do item do cardapio.'
          ], 422);
      }
-     public function update () {
-        
+     public function update(Request $request, $id)
+     {
+         $cardapioItem = CardapioItem::find($id);
+         if (!$cardapioItem) {
+             return response()->json(['message' => 'Relação cardápio e item não encontrada.'], 404);
+         }
+ 
+         $updated = $cardapioItem->update($request->all());
+         if ($updated) {
+             return response()->json([
+                 'message' => 'Relação atualizada com sucesso.',
+                 'cardapioItem' => $cardapioItem
+             ]);
+         }
+ 
+         return response()->json([
+             'message' => 'Erro ao tentar atualizar relação.'
+         ], 422);
      }
-     public function destroy () {
-        
+ 
+     public function destroy($id)
+     {
+         $cardapioItem = CardapioItem::find($id);
+         if (!$cardapioItem) {
+             return response()->json(['message' => 'Relação não encontrada.'], 404);
+         }
+ 
+         if ($cardapioItem->delete()) {
+             return response()->json(['message' => 'Relação item e cardápio deletada com sucesso.']);
+         }
+ 
+         return response()->json([
+             'message' => 'Erro ao tentar deletar relação entre cardápio e item.'
+         ], 422);
      }
  }

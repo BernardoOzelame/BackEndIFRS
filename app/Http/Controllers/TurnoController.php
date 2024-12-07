@@ -28,10 +28,39 @@ class TurnoController extends Controller
             'message' => 'Algo inesperado aconteceu durante a inserção do turno.'
         ], 422);
     }
-    public function update () {
-        
+    public function update(Request $request, $id)
+    {
+        $turno = Turno::find($id);
+        if (!$turno) {
+            return response()->json(['message' => 'Turno não encontrado.'], 404);
+        }
+
+        $updated = $turno->update($request->all());
+        if ($updated) {
+            return response()->json([
+                'message' => 'Turno atualizado com sucesso.',
+                'turno' => $turno
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar atualizar o turno.'
+        ], 422);
     }
-    public function destroy () {
-        
+
+    public function destroy($id)
+    {
+        $turno = Turno::find($id);
+        if (!$turno) {
+            return response()->json(['message' => 'Turno não encontrado.'], 404);
+        }
+
+        if ($turno->delete()) {
+            return response()->json(['message' => 'Turno deletado com sucesso.']);
+        }
+
+        return response()->json([
+            'message' => 'Erro ao tentar deletar o turno.'
+        ], 422);
     }
 }
