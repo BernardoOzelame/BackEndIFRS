@@ -4,12 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CardapioItem extends Model
-{
+class CardapioItem extends Model {
     protected $table = 'cardapios_itens';
 
     protected $fillable = [
         'cardapioId',
-        'itemId'
+        'itemIds'
     ];
 }
